@@ -1,0 +1,6 @@
+@Soporte_Técnico_ISP_HostAddress = http://localhost:5030
+
+GET {{Soporte_Técnico_ISP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
