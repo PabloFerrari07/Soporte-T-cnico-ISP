@@ -19,20 +19,22 @@ namespace Soporte_Técnico_ISP.Services
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier,usuario.id.ToString()),
-                new Claim(ClaimTypes.Email,usuario.email.ToString()),
-                new Claim(ClaimTypes.Role, usuario.rol)
-            };
+            new Claim("id", usuario.id.ToString()),
+            new Claim(ClaimTypes.Name, usuario.nombre),
+            new Claim(ClaimTypes.Email, usuario.email),
+            new Claim(ClaimTypes.Role, usuario.rol)
+               };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                    issuer: _config["Jwt:Issuer"],
-                    audience: _config["Jwt:Audience"],
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:DurationInMinutes"])),
-                   signingCredentials: creds);
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:ExpiresInMinutes"])),
+                signingCredentials: creds
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
