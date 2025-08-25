@@ -16,6 +16,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IGestionUsuariosService, GestionUsuariosService>();
+builder.Services.AddScoped<IGestionCasosService, GestionCasosService>();
+
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<TokenService>(); 
 //Base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
