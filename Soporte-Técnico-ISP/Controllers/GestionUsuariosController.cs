@@ -31,7 +31,20 @@ namespace Soporte_Técnico_ISP.Controllers
         [HttpGet]
         [Route("ObtenerUsuarios")]
         public async Task<IEnumerable<UsuarioDto>> Obtener() => await _gestionUsuariosSerivice.ObtenerUsuarios();
-   
+
+        [HttpPut]
+        public async Task<ActionResult<UsuarioDto>> PutUsuario(int id, [FromBody] UsuarioDto dto)
+        {
+            var usuarioEditado = await _gestionUsuariosSerivice.EditarUsuario(id, dto);
+            return Ok(usuarioEditado);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUsuario(int id)
+        {
+            await _gestionUsuariosSerivice.EliminarUsuarios(id);
+            return NoContent();
+        }
 
     }
 }

@@ -40,14 +40,38 @@ namespace Soporte_Técnico_ISP.Services
             };
         }
 
-        public Task<UsuarioDto> EditarUsuario(int id, UsuarioDto dto)
+        public async Task<UsuarioDto> EditarUsuario(int id, UsuarioDto dto)
         {
-            throw new NotImplementedException();
+            var usuario = await _context.Usuarios.FindAsync(id);
+
+            if (usuario == null) return null;
+
+            usuario.nombre = dto.nombre;
+            usuario.email = dto.email;
+            usuario.rol = dto.rol;
+
+            _context.Usuarios.Update(usuario);
+            await _context.SaveChangesAsync();
+
+            return new UsuarioDto
+            {
+                nombre = usuario.nombre,
+                email = usuario.email,
+                rol = usuario.rol
+            };
         }
 
-        public Task EliminarUsuarios(int id)
+        public async Task EliminarUsuarios(int id)
         {
-            throw new NotImplementedException();
+            var usuario = await _context.Usuarios.FindAsync(id);
+
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado");
+
+            _context.Usuarios.Remove(usuario);
+            await _context.SaveChangesAsync();
+
+
         }
 
 
