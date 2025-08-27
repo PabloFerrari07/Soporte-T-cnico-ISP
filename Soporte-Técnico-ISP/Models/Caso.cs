@@ -10,6 +10,8 @@
 
         public string estado { get; set; }
 
+        public string prioridad { get; set; }
+
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
     }
